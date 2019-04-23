@@ -6,14 +6,15 @@ class thug {
        this.clicks = clicks;
     }
 }
-    const thug1 = new thug("Thug N Sway", "img/thug0.jpg");
-    const thug2 = new thug("Thug Grunt", "img/thug1.jpg");
+    const thug1 = new thug("Thugnifecent N' Sway", "img/thug0.jpg");
+    const thug2 = new thug("Thugnifecent Grunt", "img/thug1.jpg");
     const thug3 = new thug("Thug-Maid", "img/thug2.jpg");
-    const thug4 = new thug("Thug Smirk", "img/thug3.jpg");
-    const thug5 = new thug("Thug N office", "img/thug4.jpg");
+    const thug4 = new thug("Thugnifecent Smirk", "img/thug3.jpg");
+    const thug5 = new thug("Thugnifecent In Office", "img/thug4.jpg");
+    const thug6 = new thug("Thugnifecent Got A Job", "img/Thug6.png");
         
     // list of all thugnifecents
-const thugnifecents = [thug1, thug2, thug3, thug4, thug5];
+const thugnifecents = [thug1, thug2, thug3, thug4, thug5, thug6];
 
     //thug list
 
@@ -23,15 +24,43 @@ const leftColumn = document.querySelector(".col-4");
     //construct thug list
 const ul = document.createElement("ul");
 ul.className = "list-group"
-
 for(let thug of thugnifecents) {
     const li = document.createElement("li");
     li.className = "list-group-item"
     li.textContent = thug.name;
+    li.addEventListener("click", ()=>{
+        displayThug(thug);
+    })
     ul.appendChild(li);
 }
+ 
 
 leftColumn.appendChild(ul);
+
+const displayThug = (thug) => {
+    const rightColumn = document.querySelector(".col-8");
+    // Clear the display area
+    rightColumn.innerHTML = "";
+    // display the thug selected 
+    const h1 = document.createElement("h3");
+    h1.textContent = thug.name;
+    rightColumn.appendChild(h1);
+
+    const img = document.createElement("img");
+    img.setAttribute("src", thug.picture);
+    img.setAttribute("alt", "thug image");
+    img.addEventListener("click", ()=>{
+    thug.clicks++;
+     h2.textContent = `${thug.clicks}`;
+    })
+    rightColumn.appendChild(img);
+
+
+    const h2 = document.createElement("h2");
+    h2.textContent = `Clicks: ${thug.clicks}`;
+    rightColumn.appendChild(h2);
+}
+
 
 /* single cat code
 // button click for photo 2
