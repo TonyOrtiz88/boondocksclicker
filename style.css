@@ -1,8 +1,16 @@
 body {
     padding-top: 75px;
     padding-bottom: 750px;
+    background: rgb(221, 206, 206);
 }
 
 h1 {
     color: blueviolet
+}
+li {
+    cursor: pointer;
+}
+
+img {
+    cursor: cell;
 }

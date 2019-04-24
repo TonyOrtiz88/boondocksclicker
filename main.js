@@ -1,43 +1,57 @@
 
-class thug {
+//model part
+
+class thug { 
     constructor(name, picture, clicks = 0) {
-       this.name = name;
-       this.picture = picture;
-       this.clicks = clicks;
+        this.name = name;
+        this.picture = picture;
+        this.clicks = clicks;
     }
 }
-    const thug1 = new thug("Thugnifecent N' Sway", "img/thug0.jpg");
-    const thug2 = new thug("Thugnifecent Grunt", "img/thug1.jpg");
-    const thug3 = new thug("Thug-Maid", "img/thug2.jpg");
-    const thug4 = new thug("Thugnifecent Smirk", "img/thug3.jpg");
-    const thug5 = new thug("Thugnifecent In Office", "img/thug4.jpg");
-    const thug6 = new thug("Thugnifecent Got A Job", "img/Thug6.png");
-        
-    // list of all thugnifecents
-const thugnifecents = [thug1, thug2, thug3, thug4, thug5, thug6];
 
-    //thug list
+var model = {
+// list of all thugnifecents
+    thug: [
+    new thug("Thugnifecent N' Sway", "img/thug0.jpg"),
+    new thug("Thugnifecent Grunt", "img/thug1.jpg"),
+    new thug("Thug-Maid", "img/thug2.jpg"),
+    new thug("Thugnifecent Smirk", "img/thug3.jpg"),
+    new thug("Thugnifecent In Office", "img/thug4.jpg"),
+    new thug("Thugnifecent Got A Job", "img/Thug6.png"),
+    ]
+}
 
-    // select left column in dom
-const leftColumn = document.querySelector(".col-4");
+//middle part
+var octopus = {
+    getThugs: function() {
+        return model.thug;
+    }
+}        
 
-    //construct thug list
-const ul = document.createElement("ul");
-ul.className = "list-group"
-for(let thug of thugnifecents) {
+//view part
+var view = {
+// Initilize the left cat list
+    init: function() {
+// select left column in dom
+    const leftColumn = document.querySelector(".col-4");
+//construct thug list
+    const ul = document.createElement("ul");
+    ul.className = "list-group"
+    for(let thug of octopus.getThugs()) {
     const li = document.createElement("li");
     li.className = "list-group-item"
     li.textContent = thug.name;
     li.addEventListener("click", ()=>{
-        displayThug(thug);
+        view.render(thug);
     })
+
     ul.appendChild(li);
-}
- 
+    }
+    leftColumn.appendChild(ul);
+},
 
-leftColumn.appendChild(ul);
-
-const displayThug = (thug) => {
+//render the cat on the right
+render: function(thug) {
     const rightColumn = document.querySelector(".col-8");
     // Clear the display area
     rightColumn.innerHTML = "";
@@ -59,7 +73,12 @@ const displayThug = (thug) => {
     const h2 = document.createElement("h2");
     h2.textContent = `Clicks: ${thug.clicks}`;
     rightColumn.appendChild(h2);
+    }
 }
+ 
+view.init();
+   
+
 
 
 /* single cat code
