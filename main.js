@@ -9,6 +9,7 @@ class thug {
     }
 }
 
+//model part
 var model = {
 // list of all thugnifecents
     thug: [
@@ -18,13 +19,24 @@ var model = {
     new thug("Thugnifecent Smirk", "img/thug3.jpg"),
     new thug("Thugnifecent In Office", "img/thug4.jpg"),
     new thug("Thugnifecent Got A Job", "img/Thug6.png"),
-    ]
+    ],
+    addThug: function(thugName, thugPicture) {
+        const thug = {
+          name: thugName,
+          picture: thugPicture,
+          clicks: 0
+        }
+        model.cats.push(cat);
+      }
 }
 
 //middle part
 var octopus = {
     getThugs: function() {
         return model.thug;
+    },
+    addThug: function(thugName, thugPicture) {
+      model.addCat(thugName, thugPicture);
     }
 }        
 
@@ -34,7 +46,10 @@ var view = {
     init: function() {
 // select left column in dom
     const leftColumn = document.querySelector(".col-4");
-//construct thug list
+ //reset left column
+ leftColumn.innerHTML = "";
+
+    //construct thug list
     const ul = document.createElement("ul");
     ul.className = "list-group"
     for(let thug of octopus.getThugs()) {
@@ -44,10 +59,22 @@ var view = {
     li.addEventListener("click", ()=>{
         view.render(thug);
     })
-
-    ul.appendChild(li);
+     ul.appendChild(li);
     }
     leftColumn.appendChild(ul);
+
+    // add a admin button
+    const adminBtn = document.createElement("button");
+    adminBtn.textContent = "Add New Thugnifecent";
+    adminBtn.className = "btn btn-success mt-4";
+    adminBtn.addEventListener("click", this.showForm);
+    leftColumn.appendChild(adminBtn);
+
+
+// Add an empty form
+const form = document.createElement("form");
+form.addEventListener("submit", this.addThug);
+leftColumn.appendChild(form);
 },
 
 //render the cat on the right
@@ -56,9 +83,9 @@ render: function(thug) {
     // Clear the display area
     rightColumn.innerHTML = "";
     // display the thug selected 
-    const h1 = document.createElement("h3");
-    h1.textContent = thug.name;
-    rightColumn.appendChild(h1);
+    const h3 = document.createElement("h3");
+    h3.textContent = thug.name;
+    rightColumn.appendChild(h3);
 
     const img = document.createElement("img");
     img.setAttribute("src", thug.picture);
@@ -73,7 +100,62 @@ render: function(thug) {
     const h2 = document.createElement("h2");
     h2.textContent = `Clicks: ${thug.clicks}`;
     rightColumn.appendChild(h2);
-    }
+    },
+
+    showForm: function() {
+    const form = document.querySelector("form");
+    //reset form
+    form.innerHTML = "";
+    //adding input name
+    const nameGroup = document.createElement("div");
+    nameGroup.className = "form-group";
+    const nameLabel = document.createElement("label");
+    nameLabel.textContent = "Thugnifecent Name";
+    nameLabel.setAttribute("for", "thugName");
+
+    const nameInput = document.createElement("input");
+    nameInput.className = "form-control";
+    nameInput.setAttribute("id", "thugName");
+    nameGroup.appendChild(nameLabel);
+    nameGroup.appendChild(nameInput);
+    form.appendChild(nameGroup);
+
+    // Adding picture input
+    const imgGroup = document.createElement("div");
+    imgGroup.className = "form-group";
+    const imgLabel = document.createElement("label");
+    imgLabel.textContent = "Thugnifecent Picture";
+    imgLabel.setAttribute("for", "thugPicture");
+    const imgInput = document.createElement("input");
+    imgInput.className = "form-control";
+    imgInput.setAttribute("id", "thugPicture");
+    imgGroup.appendChild(imgLabel);
+    imgGroup.appendChild(imgInput);
+    form.appendChild(imgGroup);
+
+    // Adding buttons
+    const submitBtn = document.createElement("button");
+    submitBtn.textContent = "Submit";
+    submitBtn.className = "btn btn-success";
+    form.appendChild(submitBtn);
+    
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.className = "btn btn-danger float-right"; 
+    cancelBtn.setAttribute("type", "button");
+    cancelBtn.addEventListener("click", ()=> {
+      form.innerHTML="";
+    })
+    form.appendChild(cancelBtn);
+  },
+
+  addthug: function(e) {
+    e.preventDefault();
+    const thugName = document.querySelector("#thugName").value;
+    const thugPicture = document.querySelector("#thugPicture").value;
+    octopus.addThug(thugName, thugPicture);
+    view.init();
+  }
 }
  
 view.init();
